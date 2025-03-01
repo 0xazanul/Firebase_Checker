@@ -68,18 +68,31 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 ![Help](img/help.png)
 
+### APK file path
 
 ![File](img/file.png)
 
+### Vulnerability Checking
+
 ![Checking](img/checking.png)
+
+### Detected remote Config misconfiguration
 
 ![Remote](img/remote-miscon.png)
 
+### Signup Enable for Unauthorized user
+
 ![Signup](img/signup-miscon.png)
+
+### Fetching Register User Information
 
 ![User](img/user-info.png)
 
+### Generating Access Token
+
 ![Acess](img/access-token-generate.png)
+
+### Vulnerability Detected
 
 ![vulnerability](img/vulnerability-check-result.png)
 
