@@ -8,7 +8,6 @@ A Firebase Checker is powerful Python tool to analyze APK files for Firebase-rel
 - **Check for Open Firebase Databases:** Detects if the Firebase database is publicly accessible.
 - **Unauthorized Signup Check:** Tests if unauthorized Firebase signup is possible using the extracted Google API Key.
 - **Firebase Remote Config Check:** Identifies if Firebase Remote Config is enabled and accessible.
-- **Interactive Interface:** Supports tab completion for file paths, making it easy to use.
 - **Detailed Reporting:** Provides clear and colored output for vulnerability results.
 
 # Installation
