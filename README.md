@@ -30,7 +30,7 @@ Python 3.x
 1. Clone this Repository
 
 ```
-git clone (https://github.com/Suryesh/Firebase_Checker.git) && cd firebase-apk-analyzer
+git clone https://github.com/Suryesh/Firebase_Checker.git && cd Firebase_Checker
 ```
 
 # Basic Usages
