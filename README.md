@@ -68,14 +68,8 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 # PoC - 1
 
-![Domain](img/format.png)
+![Help](img/help.png)
 
 ### Target
 ![File](img/target.png)
 
-### Results
-
-![Result](img/results.png)
-
-### Update Feature
-![update](img/update.png)
