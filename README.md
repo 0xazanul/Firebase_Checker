@@ -33,6 +33,18 @@ Python 3.x
 git clone https://github.com/Suryesh/Firebase_Checker.git && cd Firebase_Checker
 ```
 
+2. Install the required dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+3. Now give Executable permission
+
+```
+chmod +x firebase-remote-extract_and_account_creation.py
+```
+
 # Basic Usages
 
 1. Clone This Repository
