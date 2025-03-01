@@ -83,4 +83,15 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 ![File](img/vulnerability-check-result.png)
 
-![File](img/file.png)
+
+# PoC - 2
+
+![File](img/file-2.png)
+
+![File](img/signup-miscon-2.png)
+
+![File](img/user-info-2.png)
+
+![File](img/access-token-generate-2.png)
+
+![File](img/vulnerability-check-result-2.png)
