@@ -118,7 +118,7 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)] file for details.
 
 ## Disclaimer
 This tool is intended for educational and ethical testing purposes only. Do not use it for any illegal or unauthorized activities. The author is not responsible for any misuse of this tool.
