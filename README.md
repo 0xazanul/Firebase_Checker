@@ -47,24 +47,17 @@ chmod +x firebase-remote-extract_and_account_creation.py
 
 # Basic Usages
 
-1. Clone This Repository
-   ```
-   git clone https://github.com/Suryesh/OTX_AlienVault_URL.git
-   ```
-3. Now go to OTX_AlienVault_URL directory
-   ```
-   cd OTX_AlienVault_URL
-   ```
-5. Give File Executable Permission
-   ```
-   chmod +x alien.sh
-   ```
-7. Now good to go, run the file
-   ```
-   ./alien.sh or bash alien.sh
-   ```
-8.  Choose Option `1` or `2`
-9.  Output will be saved automatically
+1. Run the script:
+
+```
+python3 firebase-remote-extract_and_account_creation.py
+```
+
+2. Enter the path to the APK file or folder containing APKs when prompted:
+
+```Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk```
+
+3. Now the tool will analyze the APK and display the results.
 
 # Screenshots
 
