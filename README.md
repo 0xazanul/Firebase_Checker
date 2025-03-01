@@ -68,6 +68,19 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 ![Help](img/help.png)
 
-### Target
-![File](img/target.png)
 
+![File](img/file.png)
+
+![File](img/checking.png)
+
+![File](img/remote-miscon.png)
+
+![File](img/signup-miscon.png)
+
+![File](img/user-info.png)
+
+![File](img/access-token-generate.png)
+
+![File](img/vulnerability-check-result.png)
+
+![File](img/file.png)
