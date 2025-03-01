@@ -120,5 +120,10 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 ## License
 This project is licensed under the MIT License. See the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) file for details.
 
+ ## 💰 You can help me by Donating
+ 
+  [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/suryesh_92) [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/Suryesh92?country.x=IN&locale.x=en_GB) 
+
+
 ## Disclaimer
 This tool is intended for educational and ethical testing purposes only. Do not use it for any illegal or unauthorized activities. The author is not responsible for any misuse of this tool.
