@@ -8,14 +8,32 @@ The script utilizes the AlienVault OTX API to query URLs linked to the specified
 
 # Features
 
-- **Automated Scraping:** Fetches URLs associated with a domain in paginated batches.
-- **Error Handling:** Stops gracefully when no more URLs are available.
-- **Output Management:** Saves all results in a timestamped, organized folder structure for easy access.
-- **Interactive Input:** Prompts the user for input with a user-friendly interface.
-- **Colored Output:** Displays informational, error, and success messages with clear color coding for better readability.
-- **Update Feature:** Prompt to the user for latest Version
+- **Extract Firebase Details:** Automatically extracts Firebase App ID, Firebase URL, and Google API Key from APK files.
+- **Check for Open Firebase Databases:** Detects if the Firebase database is publicly accessible.
+- **Unauthorized Signup Check:** Tests if unauthorized Firebase signup is possible using the extracted Google API Key.
+- **Firebase Remote Config Check:** Identifies if Firebase Remote Config is enabled and accessible.
+- **Interactive Interface:** Supports tab completion for file paths, making it easy to use.
+- **Detailed Reporting:** Provides clear and colored output for vulnerability results.
 
-# Usages
+# Installation
+
+## Prerequisites
+
+Python 3.x
+
+`requests` library (`pip install requests`)
+
+`termcolor` library (`pip install termcolor`)
+
+## Steps
+
+1. Clone this Repository
+
+```
+git clone https://github.com/your-username/firebase-apk-analyzer.git && cd firebase-apk-analyzer
+```
+
+# Basic Usages
 
 1. Clone This Repository
    ```
