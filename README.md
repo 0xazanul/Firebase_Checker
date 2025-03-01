@@ -47,23 +47,27 @@ chmod +x firebase-remote-extract_and_account_creation.py
 
 # Basic Usages
 
-1. Run the script:
+1. Check help for usages
+
+```
+python3 firebase-remote-extract_and_account_creation.py -h
+```
+2. Run the script:
 
 ```
 python3 firebase-remote-extract_and_account_creation.py
 ```
 
-2. Enter the path to the APK file or folder containing APKs when prompted:
+3. Enter the path to the APK file or folder containing APKs when prompted:
 
 ```
 Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 ```
 
-3. Now the tool will analyze the APK and display the results.
+4. Now the tool will analyze the APK and display the results.
 
-# Screenshots
+# PoC - 1
 
-### Format
 ![Domain](img/format.png)
 
 ### Target
