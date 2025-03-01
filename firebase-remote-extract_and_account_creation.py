@@ -7,6 +7,7 @@ import os
 import random
 import uuid
 from termcolor import colored
+import readline
 
 BANNER = r"""
    _____         __                  _______           __          
@@ -14,17 +15,42 @@ BANNER = r"""
  / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/
 /_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/   
                                                                     
-                                   This tool is built by Suryesh
-                                   
+                                   This tool is built by Suryesh                                   
                Check my Youtube Channel: https://www.youtube.com/@suryesh_92
 """
 
+def print_banner():
+    """Prints the banner."""
+    print(colored(BANNER, 'cyan'))
+
+def help():
+    """Displays help information about the script."""
+    help_text = """
+    This tool analyzes APK files for Firebase-related vulnerabilities, such as:
+    - Open Firebase databases
+    - Unauthorized Firebase signup
+    - Firebase Remote Config misconfigurations
+
+    Usage:
+    python3 firebase-remote-extract_and_account_creation.py
+    
+    - Now Enter your apk or give directory path where your apk located like /home/{username}/path/gmail.apk
+    - For more information, visit: https://github.com/Suryesh/Firebase_Checker
+    - And for live Bug Bounty session join our Discord server and subscribe to our channel.
+    
+    Youtube: https://www.youtube.com/@suryesh_92
+    Discord : https://discord.com/invite/EfgnVNbh3N
+    """
+    print(colored(help_text, 'cyan'))
+
+# Email Generator
 def generate_random_email():
     """Generates a random email address."""
     username = str(uuid.uuid4())[:10]
     domain = random.choice(["gmail.com", "yahoo.com", "outlook.com", "protonmail.com"])
     return f"{username}@{domain}"
 
+# Information extract from apk file
 def extract_info_from_apk(apk_path):
     """Extracts App ID, Firebase URL, and Google API Key from an APK file."""
     result = subprocess.run(['strings', apk_path], capture_output=True, text=True)
@@ -51,6 +77,7 @@ def execute_curl_command(curl_cmd):
     print(colored(f"\nCurl Output:\n{result.stdout}", 'magenta'))
     return result.stdout
 
+# Vulnerability check in apk file
 def check_firebase_vulnerability(firebase_url, google_api_key, app_id, apk_name):
     """Checks for Firebase vulnerabilities, including open databases and unauthorized signup."""
     vulnerabilities = []
@@ -85,6 +112,7 @@ def check_firebase_vulnerability(firebase_url, google_api_key, app_id, apk_name)
     
     return vulnerabilities
 
+# Unauthorizd signup checker
 def check_unauthorized_signup(google_api_key, apk_name):
     """Checks if unauthorized Firebase signup is possible."""
     vulnerabilities = []
@@ -119,8 +147,8 @@ def check_unauthorized_signup(google_api_key, apk_name):
     
     return vulnerabilities
 
+# apk processing
 def process_apks(input_path):
-    print(colored(BANNER, 'cyan'))
     """Processes either a folder containing APKs or a single APK file."""
     if os.path.isdir(input_path):
         apk_files = [os.path.join(input_path, f) for f in os.listdir(input_path) if f.endswith('.apk')]
@@ -146,10 +174,29 @@ def process_apks(input_path):
         for vuln in vulnerabilities:
             print(f"- {colored(vuln, 'red' if 'detected' in vuln or 'enabled' in vuln else 'green')}")
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <path_to_apk_or_folder>")
-        sys.exit(1)
+def tab_complete_path(text, state):
+    """Enables tab completion for file paths."""
+    line = readline.get_line_buffer()
+    expanded_path = os.path.expanduser(line)
+    matches = [f for f in os.listdir(os.path.dirname(expanded_path) or '.') if f.startswith(os.path.basename(expanded_path))]
+    if state < len(matches):
+        return matches[state]
+    else:
+        return None
 
-    input_path = sys.argv[1]
-    process_apks(input_path)
+def get_apk_path():
+    """Prompts the user to enter the path to an APK file or folder with tab completion."""
+    # Enable tab completion
+    readline.set_completer(tab_complete_path)
+    readline.parse_and_bind("tab: complete")
+    return input(colored("Enter the path to the APK file or folder containing APKs: ", "yellow"))
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] in ["-h", "--help"]:
+        print_banner()
+        help()
+        sys.exit(0)
+
+    print_banner()
+    apk_path = get_apk_path()
+    process_apks(apk_path)
