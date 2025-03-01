@@ -68,7 +68,7 @@ Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
 
 # PoC - 1
 
-### help
+### Help
 
 ![Help](img/help.png)
 
