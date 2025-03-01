@@ -55,7 +55,9 @@ python3 firebase-remote-extract_and_account_creation.py
 
 2. Enter the path to the APK file or folder containing APKs when prompted:
 
-```Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk```
+```
+Enter the path to the APK file or folder containing APKs: /path/to/apk/file.apk
+```
 
 3. Now the tool will analyze the APK and display the results.
 
