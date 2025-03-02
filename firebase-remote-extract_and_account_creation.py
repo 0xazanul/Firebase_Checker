@@ -151,12 +151,17 @@ def check_unauthorized_signup(google_api_key, apk_name):
 # apk processing
 def process_apks(input_path):
     """Processes either a folder containing APKs or a single APK file."""
+    # Get the directory of the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Resolve the input path relative to the script's directory
+    input_path = os.path.join(script_dir, input_path)
+    
     if os.path.isdir(input_path):
         apk_files = [os.path.join(input_path, f) for f in os.listdir(input_path) if f.endswith('.apk')]
     elif os.path.isfile(input_path) and input_path.endswith('.apk'):
         apk_files = [input_path]
     else:
-        print(colored("Error: Provide a valid APK file or a directory containing APKs.", 'red'))
+        print(colored(f"Error: The path '{input_path}' is not a valid APK file or directory containing APKs.", 'red'))
         sys.exit(1)
 
     for apk_path in apk_files:
@@ -187,7 +192,6 @@ def tab_complete_path(text, state):
 
 def get_apk_path():
     """Prompts the user to enter the path to an APK file or folder with tab completion."""
-    # Enable tab completion
     readline.set_completer(tab_complete_path)
     readline.parse_and_bind("tab: complete")
     return input(colored("Enter the path to the APK file or folder containing APKs: ", "yellow"))
