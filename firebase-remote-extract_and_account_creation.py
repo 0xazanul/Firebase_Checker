@@ -151,9 +151,7 @@ def check_unauthorized_signup(google_api_key, apk_name):
 # apk processing
 def process_apks(input_path):
     """Processes either a folder containing APKs or a single APK file."""
-    # Get the directory of the script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Resolve the input path relative to the script's directory
     input_path = os.path.join(script_dir, input_path)
     
     if os.path.isdir(input_path):
