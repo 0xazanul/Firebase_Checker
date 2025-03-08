@@ -15,12 +15,12 @@ BANNER = r"""
  / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/
 /_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/   
                                                                     
-                           This tool is built by Suryesh  V: 1.0.1                                 
+                           This tool is built by Suryesh  V: 1.0.0                                 
                Check my Youtube Channel: https://www.youtube.com/@suryesh_92
 """
 
 # Constants for auto-update
-SCRIPT_VERSION = "1.0.1"
+SCRIPT_VERSION = "1.0.0"
 REMOTE_SCRIPT_URL = "https://raw.githubusercontent.com/Suryesh/Firebase_Checker/main/firebase-checker.py"
   
 #check for update  
