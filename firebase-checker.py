@@ -15,12 +15,12 @@ BANNER = r"""
  / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/
 /_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/   
                                                                     
-                           This tool is built by Suryesh  V: 1.0.0                                 
+                           This tool is built by Suryesh  V: 1.0.1                                 
                Check my Youtube Channel: https://www.youtube.com/@suryesh_92
 """
 
 # Constants for auto-update
-SCRIPT_VERSION = "1.0.0"
+SCRIPT_VERSION = "1.0.1"
 REMOTE_SCRIPT_URL = "https://raw.githubusercontent.com/Suryesh/Firebase_Checker/main/firebase-checker.py"
   
 #check for update  
@@ -29,12 +29,10 @@ def check_for_updates():
     print(colored("\nChecking for updates...", "blue"))
     
     try:
-        # Fetch the remote script
         response = requests.get(REMOTE_SCRIPT_URL)
         if response.status_code == 200:
             remote_script = response.text
 
-            # Extract the version from the remote script
             remote_version = None
             for line in remote_script.splitlines():
                 if line.startswith("SCRIPT_VERSION"):
@@ -47,7 +45,6 @@ def check_for_updates():
                 choice = input(colored("Do you want to update? (y/n): ", "yellow")).strip().lower()
                 
                 if choice == "y":
-                    # Replace the current script with the updated version
                     with open(__file__, "w", encoding="utf-8") as f:
                         f.write(remote_script)
                     print(colored("Update successful! Please restart the script.", "green"))
