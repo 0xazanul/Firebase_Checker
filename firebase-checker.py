@@ -15,9 +15,51 @@ BANNER = r"""
  / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/
 /_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/   
                                                                     
-                                   This tool is built by Suryesh                                   
+                           This tool is built by Suryesh  V: 1.0.0                                 
                Check my Youtube Channel: https://www.youtube.com/@suryesh_92
 """
+
+# Constants for auto-update
+SCRIPT_VERSION = "1.0.0"
+REMOTE_SCRIPT_URL = "https://raw.githubusercontent.com/Suryesh/Firebase_Checker/main/firebase-checker.py"
+  
+#check for update  
+def check_for_updates():
+    """Checks for updates and updates the script if a new version is available."""
+    print(colored("\nChecking for updates...", "blue"))
+    
+    try:
+        # Fetch the remote script
+        response = requests.get(REMOTE_SCRIPT_URL)
+        if response.status_code == 200:
+            remote_script = response.text
+
+            # Extract the version from the remote script
+            remote_version = None
+            for line in remote_script.splitlines():
+                if line.startswith("SCRIPT_VERSION"):
+                    remote_version = line.split('"')[1]
+                    break
+
+            if remote_version and remote_version != SCRIPT_VERSION:
+                print(colored(f"Update available: {remote_version}", "green"))
+                print(colored(f"Current version: {SCRIPT_VERSION}", "yellow"))
+                choice = input(colored("Do you want to update? (y/n): ", "yellow")).strip().lower()
+                
+                if choice == "y":
+                    # Replace the current script with the updated version
+                    with open(__file__, "w", encoding="utf-8") as f:
+                        f.write(remote_script)
+                    print(colored("Update successful! Please restart the script.", "green"))
+                    sys.exit(0)
+                else:
+                    print(colored("Update skipped.", "yellow"))
+            else:
+                print(colored("You are using the latest version.", "green"))
+        else:
+            print(colored("Failed to check for updates. Please try again later.", "red"))
+    except Exception as e:
+        print(colored(f"Error checking for updates: {e}", "red"))
 
 def print_banner():
     """Prints the banner."""
@@ -195,6 +237,7 @@ def get_apk_path():
     return input(colored("Enter the path to the APK file or folder containing APKs: ", "yellow"))
 
 if __name__ == "__main__":
+    check_for_updates()
     if len(sys.argv) == 2 and sys.argv[1] in ["-h", "--help"]:
         print_banner()
         help()
