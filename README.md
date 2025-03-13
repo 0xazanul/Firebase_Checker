@@ -37,7 +37,7 @@ pip install -r requirements.txt
 3. Now give Executable permission
 
 ```
-chmod +x firebase-remote-extract_and_account_creation.py
+chmod +x firebase-checker.py
 ```
 
 # Basic Usages
@@ -45,12 +45,12 @@ chmod +x firebase-remote-extract_and_account_creation.py
 1. Check help for usages
 
 ```
-python3 firebase-remote-extract_and_account_creation.py -h
+python3  firebase-checker.py -h
 ```
 2. Run the script:
 
 ```
-python3 firebase-remote-extract_and_account_creation.py
+python3 firebase-checker.py
 ```
 
 3. Enter the path to the APK file or folder containing APKs when prompted:
