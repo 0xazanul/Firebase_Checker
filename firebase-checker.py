@@ -71,8 +71,8 @@ def help():
     - Firebase Remote Config misconfigurations
 
     Usage:
-    -h, --help    python3 firebase-remote-extract_and_account_creation.py -h
-    To Run        python3 firebase-remote-extract_and_account_creation.py
+    -h, --help    python3 firebase-checker.py -h
+    To Run        python3 firebase-checker.py
     
     - Now Enter your apk or give directory path where your apk located like /home/{username}/path/gmail.apk
     - For more information, visit: https://github.com/Suryesh/Firebase_Checker
