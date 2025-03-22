@@ -11,59 +11,18 @@ import readline
 
 BANNER = r"""
    _____         __                  _______           __          
-  / __(_)______ / /  ___ ____ ___   / ___/ /  ___ ____/ /_____ ____
- / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/
-/_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/   
+  / __(_)______ / /  ___ ____ ___   / ___/ /  ___ ____/ /_____ ____ 
+ / _// / __/ -_) _ \/ _ `(_-</ -_) / /__/ _ \/ -_) __/  '_/ -_) __/ 
+/_/ /_/_/  \__/_.__/\_,_/___/\__/  \___/_//_/\__/\__/_/\_\\__/_/    
                                                                     
                            This tool is built by Suryesh  V: 1.0.0                                 
                Check my Youtube Channel: https://www.youtube.com/@suryesh_92
 """
 
-# Constants for auto-update
-SCRIPT_VERSION = "1.0.0"
-REMOTE_SCRIPT_URL = "https://raw.githubusercontent.com/Suryesh/Firebase_Checker/main/firebase-checker.py"
-  
-#check for update  
-def check_for_updates():
-    """Checks for updates and updates the script if a new version is available."""
-    print(colored("\nChecking for updates...", "blue"))
-    
-    try:
-        response = requests.get(REMOTE_SCRIPT_URL)
-        if response.status_code == 200:
-            remote_script = response.text
-
-            remote_version = None
-            for line in remote_script.splitlines():
-                if line.startswith("SCRIPT_VERSION"):
-                    remote_version = line.split('"')[1]
-                    break
-
-            if remote_version and remote_version != SCRIPT_VERSION:
-                print(colored(f"Update available: {remote_version}", "green"))
-                print(colored(f"Current version: {SCRIPT_VERSION}", "yellow"))
-                choice = input(colored("Do you want to update? (y/n): ", "yellow")).strip().lower()
-                
-                if choice == "y":
-                    with open(__file__, "w", encoding="utf-8") as f:
-                        f.write(remote_script)
-                    print(colored("Update successful! Please restart the script.", "green"))
-                    sys.exit(0)
-                else:
-                    print(colored("Update skipped.", "yellow"))
-            else:
-                print(colored("You are using the latest version.", "green"))
-        else:
-            print(colored("Failed to check for updates. Please try again later.", "red"))
-    except Exception as e:
-        print(colored(f"Error checking for updates: {e}", "red"))
-
 def print_banner():
-    """Prints the banner."""
     print(colored(BANNER, 'cyan'))
 
 def help():
-    """Displays help information about the script."""
     help_text = """
     This tool analyzes APK files for Firebase-related vulnerabilities, such as:
     - Open Firebase databases
@@ -74,25 +33,12 @@ def help():
     -h, --help    python3 firebase-checker.py -h
     To Run        python3 firebase-checker.py
     
-    - Now Enter your apk or give directory path where your apk located like /home/{username}/path/gmail.apk
-    - For more information, visit: https://github.com/Suryesh/Firebase_Checker
-    - And for live Bug Bounty session join our Discord server and subscribe to our channel.
-    
     Youtube: https://www.youtube.com/@suryesh_92
     Discord : https://discord.com/invite/EfgnVNbh3N
     """
     print(colored(help_text, 'cyan'))
 
-# Email Generator
-def generate_random_email():
-    """Generates a random email address."""
-    username = str(uuid.uuid4())[:10]
-    domain = random.choice(["gmail.com", "yahoo.com", "outlook.com", "protonmail.com"])
-    return f"{username}@{domain}"
-
-# Information extract from apk file
 def extract_info_from_apk(apk_path):
-    """Extracts App ID, Firebase URL, and Google API Key from an APK file."""
     result = subprocess.run(['strings', apk_path], capture_output=True, text=True)
     strings_output = result.stdout
 
@@ -107,21 +53,16 @@ def extract_info_from_apk(apk_path):
     return app_id, firebase_url, google_api_key
 
 def send_alert(message):
-    """Prints alert messages in red."""
     print(colored(f"ALERT : {message}", 'red'))
 
 def execute_curl_command(curl_cmd):
-    """Executes a curl command and prints the output."""
     print(colored(f"\nExecuting: {curl_cmd}", 'blue'))
     result = subprocess.run(curl_cmd, shell=True, capture_output=True, text=True)
     print(colored(f"\nCurl Output:\n{result.stdout}", 'magenta'))
     return result.stdout
 
-# Vulnerability check in apk file
 def check_firebase_vulnerability(firebase_url, google_api_key, app_id, apk_name):
-    """Checks for Firebase vulnerabilities, including open databases and unauthorized signup."""
     vulnerabilities = []
-    
     if firebase_url:
         try:
             response = requests.get(f"{firebase_url}/.json", timeout=5)
@@ -152,53 +93,31 @@ def check_firebase_vulnerability(firebase_url, google_api_key, app_id, apk_name)
     
     return vulnerabilities
 
-# Unauthorizd signup checker
 def check_unauthorized_signup(google_api_key, apk_name):
-    """Checks if unauthorized Firebase signup is possible."""
     vulnerabilities = []
     id_token = None
-    
+
     if google_api_key:
         signup_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={google_api_key}"
-        user_email = input(colored("Enter email for signup: ", "yellow"))
+        user_email = f"testemailforme{random.randint(1000,9999)}@gmail.com"
+        print(colored(f"Using generated email: {user_email}", "yellow"))
         signup_payload = json.dumps({"email": user_email, "password": "Test@Pass123", "returnSecureToken": True})
 
         send_alert(f"Testing unauthorized signup on {signup_url}")
         response = execute_curl_command(f"curl -X POST '{signup_url}' -H 'Content-Type: application/json' -d '{signup_payload}'")
-        
+
         if 'idToken' in response:
             vulnerabilities.append("Unauthorized Firebase signup is enabled")
             send_alert("Unauthorized signup is enabled! This is a critical vulnerability.")
-            
-            response_json = json.loads(response)
-            id_token = response_json.get("idToken")
-            refresh_token = response_json.get("refreshToken")
-            if refresh_token:
-                token_url = f"https://securetoken.googleapis.com/v1/token?key={google_api_key}"
-                token_payload = json.dumps({"grant_type": "refresh_token", "refresh_token": refresh_token})
-                send_alert("Fetching access token using refresh token...")
-                execute_curl_command(f"curl -X POST '{token_url}' -H 'Content-Type: application/json' -d '{token_payload}'")
-    
-    if id_token:
-        lookup_url = f"https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={google_api_key}"
-        lookup_payload = json.dumps({"idToken": id_token})
-        send_alert("Fetching account information using idToken...")
-        execute_curl_command(f"curl -X POST '{lookup_url}' -H 'Content-Type: application/json' -d '{lookup_payload}'")
-    
     return vulnerabilities
 
-# apk processing
 def process_apks(input_path):
-    """Processes either a folder containing APKs or a single APK file."""
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    input_path = os.path.join(script_dir, input_path)
-    
     if os.path.isdir(input_path):
         apk_files = [os.path.join(input_path, f) for f in os.listdir(input_path) if f.endswith('.apk')]
     elif os.path.isfile(input_path) and input_path.endswith('.apk'):
         apk_files = [input_path]
     else:
-        print(colored(f"Error: The path '{input_path}' is not a valid APK file or directory containing APKs.", 'red'))
+        print(colored(f"Error: '{input_path}' is invalid.", 'red'))
         sys.exit(1)
 
     for apk_path in apk_files:
@@ -206,40 +125,26 @@ def process_apks(input_path):
         print(colored(f"\nProcessing APK: {file_name}", 'cyan'))
         app_id, firebase_url, google_api_key = extract_info_from_apk(apk_path)
 
-        print(f"App ID: {colored(app_id, 'green')}")
-        print(f"Firebase URL: {colored(firebase_url, 'green')}")
-        print(f"Google API Key: {colored(google_api_key, 'green')}")
-
         vulnerabilities = check_firebase_vulnerability(firebase_url, google_api_key, app_id, file_name)
         vulnerabilities.extend(check_unauthorized_signup(google_api_key, file_name))
 
-        print(colored("\nVulnerability Check Results:", 'yellow'))
         for vuln in vulnerabilities:
-            print(f"- {colored(vuln, 'red' if 'detected' in vuln or 'enabled' in vuln else 'green')}")
+            print(colored(f"- {vuln}", 'red' if 'detected' in vuln or 'enabled' in vuln else 'green'))
 
 def tab_complete_path(text, state):
-    """Enables tab completion for file paths."""
     line = readline.get_line_buffer()
     expanded_path = os.path.expanduser(line)
     matches = [f for f in os.listdir(os.path.dirname(expanded_path) or '.') if f.startswith(os.path.basename(expanded_path))]
-    if state < len(matches):
-        return matches[state]
-    else:
-        return None
-
-def get_apk_path():
-    """Prompts the user to enter the path to an APK file or folder with tab completion."""
-    readline.set_completer(tab_complete_path)
-    readline.parse_and_bind("tab: complete")
-    return input(colored("Enter the path to the APK file or folder containing APKs: ", "yellow"))
+    return matches[state] if state < len(matches) else None
 
 if __name__ == "__main__":
-    check_for_updates()
     if len(sys.argv) == 2 and sys.argv[1] in ["-h", "--help"]:
         print_banner()
         help()
         sys.exit(0)
 
     print_banner()
-    apk_path = get_apk_path()
+    readline.set_completer(tab_complete_path)
+    readline.parse_and_bind("tab: complete")
+    apk_path = input(colored("Enter APK file or folder path: ", "yellow"))
     process_apks(apk_path)
